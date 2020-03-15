@@ -26,7 +26,26 @@ function buildCharts(sample) {
     // @TODO: Build a Bubble Chart using the sample data
     const otu_ids = data.otu_ids
     const otu_labels = data.otu_labels
-    // @TODO: Build a Pie Chart
+    const sample_values = data.sample_values
+ 
+    let bubbleLayout = {
+      margin:{t:15},
+      xaxis:{title:"OTU ID"}
+    }
+
+    let bubbleData = [{
+      x:otu_ids,
+      y:sample_values,
+      text: otu_labels,
+      mode:"markers",
+      marker: {
+        size: sample_values,
+        color: otu_ids,
+      }
+    }
+    ]
+    Plotly.plot("bubble", bubbleData, bubbleLayout);
+       // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
   })
