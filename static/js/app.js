@@ -48,9 +48,20 @@ function buildCharts(sample) {
        // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
+
+    // var sampleData = otu_ids.map((e,i)=>{
+    //   return{"otu_ids":e, "otu_labels":otu_labels[i], "sample_values": sample_values[i]}
+    // })
+    let sampleData = new Map(Object.entries(data))
+    console.log(sampleData)
+    // })
+ 
+  
+  
+
     let pieData = [
       {
-        values:sample_values.sort((a,b)=> b-a).slice(0,10),
+        values:sample_values,
         labels:otu_ids,
         hovertext: otu_labels,
         type: "pie",
@@ -91,3 +102,4 @@ function optionChanged(newSample) {
 
 // Initialize the dashboard
 init();
+
