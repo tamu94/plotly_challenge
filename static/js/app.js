@@ -27,12 +27,12 @@ function buildCharts(sample) {
     const otu_ids = data.otu_ids
     const otu_labels = data.otu_labels
     const sample_values = data.sample_values
- 
+    
     let bubbleLayout = {
       margin:{t:15},
       xaxis:{title:"OTU ID"}
     }
-
+   
     let bubbleData = [{
       x:otu_ids,
       y:sample_values,
@@ -50,9 +50,9 @@ function buildCharts(sample) {
     // otu_ids, and labels (10 each).
     let pieData = [
       {
-        values:sample_values.slice(0,10),
-        labels:otu_ids.slice(0,10),
-        hovertext: otu_labels.slice(0,10),
+        values:sample_values.sort(function(a,b) {return b-a}).slice(0,10),
+        labels:otu_ids,
+        hovertext: otu_labels,
         type: "pie",
         hoverinfo: "hovertext"
       }
