@@ -48,9 +48,21 @@ function buildCharts(sample) {
        // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
+    let pieData = [
+      {
+        values:sample_values.slice(0,10),
+        labels:otu_ids.slice(0,10),
+        hovertext: otu_labels.slice(0,10),
+        type: "pie",
+        hoverinfo: "hovertext"
+      }
+    ]
+    let pieLayout = {
+      margin: { t: 0, l: 0 }
+    };
+    Plotly.plot("pie",pieData, pieLayout)
   })
 }
-
 function init() {
   // Grab a reference to the dropdown select element
   var selector = d3.select("#selDataset");
