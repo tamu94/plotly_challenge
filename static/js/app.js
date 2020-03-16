@@ -50,7 +50,7 @@ function buildCharts(sample) {
     // otu_ids, and labels (10 each).
     let pieData = [
       {
-        values:sample_values.sort(function(a,b) {return b-a}).slice(0,10),
+        values:sample_values.sort((a,b)=> b-a).slice(0,10),
         labels:otu_ids,
         hovertext: otu_labels,
         type: "pie",
