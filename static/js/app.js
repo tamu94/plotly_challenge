@@ -11,7 +11,7 @@ function buildMetadata(sample) {
       panel.html("")
     // Use `Object.entries` to add each key and value pair to the panel
       Object.entries(data).forEach(([key,value])=>{
-        panel.append("h5").text(`${key}:${value}`)
+        panel.append("h6").text(`${key}:${value}`)
       })
 
     // BONUS: Build the Gauge Chart
@@ -20,6 +20,7 @@ function buildMetadata(sample) {
 }
 
 function buildCharts(sample) {
+  
 
   // @TODO: Use `d3.json` to fetch the sample data for the plots
   d3.json(`/samples/${sample}`).then((data)=>{
@@ -30,7 +31,8 @@ function buildCharts(sample) {
     
     let bubbleLayout = {
       margin:{t:15},
-      xaxis:{title:"OTU ID"}
+      xaxis:{title:"OTU ID"},
+      yaxis:{title:"Sample Count"}
     }
    
     let bubbleData = [{
@@ -48,22 +50,18 @@ function buildCharts(sample) {
        // @TODO: Build a Pie Chart
     // HINT: You will need to use slice() to grab the top 10 sample_values,
     // otu_ids, and labels (10 each).
-
-    // var sampleData = otu_ids.map((e,i)=>{
-    //   return{"otu_ids":e, "otu_labels":otu_labels[i], "sample_values": sample_values[i]}
-    // })
-    let sampleData = new Map(Object.entries(data))
-    console.log(sampleData)
-    // })
- 
   
-  
+    var sampleData = otu_ids.map((e,i)=>{
+      return{"otu_ids":e, "otu_labels":otu_labels[i], "sample_values": sample_values[i]}
+    })
+    
+    sampleData = sampleData.sort(((a, b) => b.sample_values - a.sample_values)).slice(0,10)
 
     let pieData = [
       {
-        values:sample_values,
-        labels:otu_ids,
-        hovertext: otu_labels,
+        values:sampleData.map(row=>row.sample_values),
+        labels:sampleData.map(row=>row.otu_ids),
+        hovertext: sampleData.map(row=>row.otu_labels),
         type: "pie",
         hoverinfo: "hovertext"
       }
@@ -71,7 +69,7 @@ function buildCharts(sample) {
     let pieLayout = {
       margin: { t: 0, l: 0 }
     };
-    Plotly.plot("pie",pieData, pieLayout)
+    Plotly.plot("pie", pieData, pieLayout)
   })
 }
 function init() {
